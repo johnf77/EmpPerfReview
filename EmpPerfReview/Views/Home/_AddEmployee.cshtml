@@ -1,0 +1,28 @@
+﻿<form role="form">
+    <div class="form-group">
+        <label for="inpFirstName">First Name</label>
+        <input id="inpFirstName" type="text" class="form-control" data-bind="value: FirstName" />
+    </div>
+
+    <div class="form-group">
+        <label for="inpLastName">Last Name</label>
+        <input id="inpLastName" type="text" class="form-control" data-bind="value: LastName" />
+    </div>
+
+    <div class="form-group">
+        <label for="inpAge">Age</label>
+        <input id="inpAge" type="text" class="form-control" data-bind="value: Age" />
+    </div>
+
+    <div class="form-group">
+        <label for="inpGender">Gender</label>
+        <select id="inpGender" class="form-control" data-bind="options: genders, value: Gender"></select>
+    </div>
+
+    <div class="form-group">
+        <label for="inpRole">Role</label>
+        <select id="inpRole" class="form-control" data-bind="options: roles, value: EmpRole"></select>
+    </div>
+</form>
+
+<input type="button" id="btnAddEmployee" class="btn btn-primary" value="Add Employee" data-bind="click: addEmployee" /> 

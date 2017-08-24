@@ -1,0 +1,16 @@
+﻿<table class="table table-striped table-bordered table-condensed">
+    <thead>
+    </thead>
+
+    <tbody data-bind="foreach: reviews">
+        <tr>
+            <td><textarea style="width:100%" rows="10" data-bind="textInput: Detail"></textarea><br></td>
+            <td><input type="button" class="btn btn-link" value="update" data-bind="click: $parent.updateReview"></td>            
+        <tr>
+</tbody>    
+</table>
+<div class="form-group" data-bind="foreach: reviews">
+        <label for="inpEmp">Assigned Employee</label>
+        <select id="inpEmp" class="form-control" data-bind="options: assignees, value: EmployeeId">></select>
+    </div>
+<input type="button" class="btn btn-default" id="btnGetAReview" value="Refresh" data-bind="click: getAReview(1)" />

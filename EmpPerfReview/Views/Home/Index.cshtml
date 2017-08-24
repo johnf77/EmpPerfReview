@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Performance Review";
+}
+
+<script>
+    function showAllReviews() {
+        var show = document.getElementById("allreviews").style.display;
+        if(show == "none")
+            document.getElementById("allreviews").style.display = "block";
+        else
+            document.getElementById("allreviews").style.display = "none";
+}
+</script>
+
+<script src="~/Scripts/knockout-3.4.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/KnockoutModels/EmployeeViewModel.js"></script>
+
+<div class="page-header">
+    <h2 class="text-center">Admin View</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2 class="panel-title">Add Employee</h2>
+            </div>
+
+            <div class="panel-body" data-bind="with: addEmployeeViewModel">
+                @Html.Partial("_AddEmployee")
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Current Employees</h2>
+            </div>
+            <div class="panel-body" data-bind="with: employeeListViewModel">
+                @Html.Partial("_EmployeesList")
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8" id="empreview" hidden>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2 class="panel-title">Review</h2>
+            </div>
+            <div class="panel-body" data-bind="with: employeeReviewViewModel">
+                @Html.Partial("_EmployeeReview")
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="button" class="btn btn-link" id="btnAllReviews" value="All Reviews" onclick="showAllReviews()" />
+
+<div class="row" id="allreviews" hidden>
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">All Reviews</h2>
+            </div>
+            <div class="panel-body" data-bind="with: reviewListViewModel">
+                @Html.Partial("_ReviewsList")
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-header">
+    <h2 class="text-center">Employee View</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Reviews Employee assigned to</h2>
+            </div>
+            <div class="panel-body" data-bind="with: reviewListViewModel">  @*replace with assignedEmployeeViewModel*@
+                @Html.Partial("_ReviewsList")
+            </div>
+        </div>
+    </div>
+</div>
