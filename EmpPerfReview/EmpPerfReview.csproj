@@ -211,15 +211,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708241356090_Initial.cs" />
-    <Compile Include="Migrations\201708241356090_Initial.Designer.cs">
-      <DependentUpon>201708241356090_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201708281606270_Initial.cs" />
+    <Compile Include="Migrations\201708281606270_Initial.Designer.cs">
+      <DependentUpon>201708281606270_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AssignedEmployee.cs" />
     <Compile Include="Models\AssignedEmployeeDTO.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\EmployeeDTO.cs" />
+    <Compile Include="Models\EmployeeReviewDTO.cs" />
     <Compile Include="Models\EmpPerfReviewContext.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\ReviewComment.cs" />
@@ -312,8 +312,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708241356090_Initial.resx">
-      <DependentUpon>201708241356090_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708281606270_Initial.resx">
+      <DependentUpon>201708281606270_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

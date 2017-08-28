@@ -23,6 +23,11 @@ namespace EmpPerfReview.Controllers
             return db.Reviews;
         }
 
+        //public IQueryable<EmployeeReviewDTO> GetReviews()
+        //{
+        //    return db.Reviews;
+        //}
+
         // GET: api/Reviews/5
         [ResponseType(typeof(Review))]
         public async Task<IHttpActionResult> GetReview(int id)

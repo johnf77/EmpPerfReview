@@ -44,12 +44,22 @@
         </div>
     </div>
 
-    <div class="col-md-8" id="empreview" hidden>
+    @*<div class="col-md-8" id="empreview" hidden>
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h2 class="panel-title">Review</h2>
             </div>
             <div class="panel-body" data-bind="with: employeeReviewViewModel">
+                @Html.Partial("_EmployeeReview")
+            </div>
+        </div>
+    </div>*@
+    <div class="col-md-8" id="empreview" hidden>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2 class="panel-title">Review</h2>
+            </div>
+            <div class="panel-body" data-bind="with: employeeListViewModel">
                 @Html.Partial("_EmployeeReview")
             </div>
         </div>
@@ -85,7 +95,8 @@
             <div class="panel-heading">
                 <h2 class="panel-title">Reviews Employee assigned to</h2>
             </div>
-            <div class="panel-body" data-bind="with: reviewListViewModel">  @*replace with assignedEmployeeViewModel*@
+            <div class="panel-body" data-bind="with: reviewListViewModel">
+                @*replace with assignedEmployeeViewModel*@
                 @Html.Partial("_ReviewsList")
             </div>
         </div>

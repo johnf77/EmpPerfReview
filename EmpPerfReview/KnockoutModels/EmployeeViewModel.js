@@ -1,6 +1,6 @@
 ﻿var employeeViewModel;
 
-function Employee(id, firstName, lastName, age, gender, empRole) {
+function Employee(id, firstName, lastName, age, gender, empRole, detail) {
     var self = this;
 
     // observable are update elements upon changes, also update on element data changes [two way binding]
@@ -26,6 +26,8 @@ function Employee(id, firstName, lastName, age, gender, empRole) {
         "Admin",
         "Employee"
     ];
+
+    self.Detail = ko.observable(detail);
 
     self.addEmployee = function () {
         var dataObject = ko.toJSON(this);
@@ -64,7 +66,7 @@ function EmployeeList() {
         // retrieve employees list from server side and push each object to model's employees list
         $.getJSON('/api/Employees', function (data) {
             $.each(data, function (key, value) {
-                self.employees.push(new Employee(value.Id, value.FirstName, value.LastName, value.Age, value.Gender, value.EmpRole));
+                self.employees.push(new Employee(value.Id, value.FirstName, value.LastName, value.Age, value.Gender, value.EmpRole, value.Detail));
             });
         });
     };

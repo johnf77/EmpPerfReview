@@ -25,6 +25,12 @@ namespace EmpPerfReview.Migrations
                 {
                     Id = 1,
                     Detail = "Offered guidance and support to colleagues/peers by….Displayed a genuine interest in listening and addressing the problems shared by employees",
+                    EmployeeId = 1
+                },
+                new Review()
+                {
+                    Id = 2,
+                    Detail = "Displayed a genuine interest in listening and addressing the problems shared by employees",
                     EmployeeId = 2
                 }
                 );

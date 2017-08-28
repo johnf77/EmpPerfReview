@@ -18,9 +18,26 @@ namespace EmpPerfReview.Controllers
         private EmpPerfReviewContext db = new EmpPerfReviewContext();
 
         // GET: api/Employees
-        public IQueryable<Employee> GetEmployees()
+        //public IQueryable<Employee> GetEmployees()
+        //{
+        //    return db.Employees;
+        //}
+
+        public IQueryable<EmployeeReviewDTO> GetEmployees() //this gets employees and their review
         {
-            return db.Employees;
+            var emprevs = from b in db.Reviews
+                          select new EmployeeReviewDTO()
+                          {
+                              Id = b.Employee.Id,
+                              FirstName = b.Employee.FirstName,
+                              LastName = b.Employee.LastName,
+                              Age = b.Employee.Age,
+                              Gender = b.Employee.Gender,
+                              EmpRole = b.Employee.EmpRole,
+                              Detail = b.Detail
+                          };
+
+            return emprevs;
         }
 
         // GET: api/Employees/5
