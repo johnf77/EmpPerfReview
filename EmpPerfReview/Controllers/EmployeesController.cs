@@ -34,7 +34,8 @@ namespace EmpPerfReview.Controllers
                               Age = b.Employee.Age,
                               Gender = b.Employee.Gender,
                               EmpRole = b.Employee.EmpRole,
-                              Detail = b.Detail
+                              Detail = b.Detail,
+                              EmployeeId = b.EmployeeId
                           };
 
             return emprevs;

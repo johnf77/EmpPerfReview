@@ -4,19 +4,10 @@
 
     <tbody data-bind="foreach: employees">
         <tr>
-            <td><textarea style = "width: 100%; max-width: 100%;" rows="5" data-bind="textInput: Detail"></textarea><br></td>                       
-        </tr>
-        <tr>
-            <td><input type="button" class="btn btn-link" value="update" data-bind="click: $parent.updateReview"></td>
-        </tr>        
+            <td><textarea style = "width: 100%; max-width: 100%;" rows="5" data-bind="textInput: Detail"></textarea><br></td>
+            <td><input type="button" class="btn btn-link" value="update" data-bind="click: $parent.updateReview"></td> 
+            <td><select class="form-control" data-bind="options: employeeList, value: EmployeeId"></select></td>                   
+        </tr>       
 </tbody>    
 </table>
-
-<tr>
-    <div class="form-group" data-bind="foreach: employees">
-        <label for="inpEmp">Assigned Employee</label>
-        <select id="inpEmp" class="form-control" data-bind="text: LastName">></select>
-    </div>
-</tr>
-
-*@*<input type="button" class="btn btn-default" id="btnGetAReview" value="Refresh" data-bind="click: getReviews" />*@
+<input type="button" class="btn btn-default" id="btnGetAReview" value="Refresh" data-bind="click: getReviews" />

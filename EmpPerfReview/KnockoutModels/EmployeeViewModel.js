@@ -1,6 +1,6 @@
 ﻿var employeeViewModel;
 
-function Employee(id, firstName, lastName, age, gender, empRole, detail) {
+function Employee(id, firstName, lastName, age, gender, empRole, detail, employeeId) {
     var self = this;
 
     // observable are update elements upon changes, also update on element data changes [two way binding]
@@ -14,7 +14,7 @@ function Employee(id, firstName, lastName, age, gender, empRole, detail) {
     }, self);
 
     self.Age = ko.observable(age);
-    self.Gender = ko.observable(age);
+    self.Gender = ko.observable(gender);
 
     // Non-editable catalog data - should come from the server
     self.genders = [
@@ -27,7 +27,15 @@ function Employee(id, firstName, lastName, age, gender, empRole, detail) {
         "Employee"
     ];
 
+    //get from server - and display name
+    self.employeeList = [
+        "1",
+        "2"
+    ];
+   
+
     self.Detail = ko.observable(detail);
+    self.EmployeeId = ko.observable(employeeId);
 
     self.addEmployee = function () {
         var dataObject = ko.toJSON(this);
@@ -53,9 +61,13 @@ function Employee(id, firstName, lastName, age, gender, empRole, detail) {
     };
 }
 
-function EmployeeList() {
+function EmployeeList(id, detail, employeeId) {
 
     var self = this;
+    self.reviews = ko.observableArray([]);
+    self.Id = ko.observable(id);
+    self.Detail = ko.observable(detail);
+    self.EmployeeId = ko.observable(employeeId);
 
     // observable arrays are update binding elements upon array changes
     self.employees = ko.observableArray([]);
@@ -66,7 +78,7 @@ function EmployeeList() {
         // retrieve employees list from server side and push each object to model's employees list
         $.getJSON('/api/Employees', function (data) {
             $.each(data, function (key, value) {
-                self.employees.push(new Employee(value.Id, value.FirstName, value.LastName, value.Age, value.Gender, value.EmpRole, value.Detail));
+                self.employees.push(new Employee(value.Id, value.FirstName, value.LastName, value.Age, value.Gender, value.EmpRole, value.Detail, value.EmployeeId));
             });
         });
     };
@@ -83,92 +95,6 @@ function EmployeeList() {
             }
         });
     };
-}
-
-var reviewViewModel;
-
-function Review(id, detail, employeeId) {
-    var self = this;
-
-    // observable are update elements upon changes, also update on element data changes [two way binding]
-    self.Id = ko.observable(id);
-    self.Detail = ko.observable(detail);
-    self.EmployeeId = ko.observable(employeeId);
-
-    //get from server
-    self.assignees = [
-       "1",
-       "2"
-    ];
-
-    self.addReview = function () {
-        var dataObject = ko.toJSON(this);
-
-        $.ajax({
-            url: '/api/Reviews',
-            type: 'post',
-            data: dataObject,
-            contentType: 'application/json',
-            success: function (data) {
-                reviewViewModel.addReviewViewModel.push(new Review(data.Id, data.Detail, data.EmployeeId));
-
-                self.Id(null);
-                self.Detail('');
-                self.EmployeeId('');
-            }
-        });
-    };
-}
-
-function ReviewList() {
-
-    var self = this;
-
-    // observable arrays are update binding elements upon array changes
-    self.reviews = ko.observableArray([]);
-
-    self.getReviews = function () {
-        self.reviews.removeAll();
-
-        // retrieve reviews list from server side and push each object to model's reviews list
-        $.getJSON('/api/Reviews', function (data) {
-            $.each(data, function (key, value) {
-                self.reviews.push(new Review(value.Id, value.Detail, value.EmployeeId));
-            });
-        });
-    };
-
-
-    // remove review. current data context object is passed to function automatically.
-    self.removeReview = function (review) {
-        $.ajax({
-            url: '/api/Reviews/' + review.Id(),
-            type: 'delete',
-            contentType: 'application/json',
-            success: function () {
-                self.reviews.remove(review);
-            }
-        });
-    };
-}
-
-function EmployeeReview(id, detail, employeeId) {
-
-    var self = this;
-
-    self.reviews = ko.observableArray([]);
-    self.Id = ko.observable(id);
-    self.Detail = ko.observable(detail);
-    self.EmployeeId = ko.observable(employeeId);
-
-    self.getAReview = function (val) {
-        self.reviews.removeAll();
-
-        // retrieve review from server side and push each object to model's reviews list
-        $.getJSON('/api/Reviews/'+ val, function (data) {
-            self.reviews.push(new Review(data.Id, data.Detail, data.EmployeeId));
-        });
-    };
 
     self.updateReview = function (review) {
         $.ajax({
@@ -180,22 +106,118 @@ function EmployeeReview(id, detail, employeeId) {
             }
         });
     };
+
+    self.getReviews = function () {
+        self.reviews.removeAll();
+
+        // retrieve reviews list from server side and push each object to model's reviews list
+        $.getJSON('/api/Reviews', function (data) {
+            $.each(data, function (key, value) {
+                self.reviews.push(new Review(value.Id, value.Detail, value.EmployeeId));
+            });
+        });
+    };
 }
 
-// create index view view model which contain two models for partial views
-employeeViewModel = {
-    addEmployeeViewModel: new Employee(), employeeListViewModel: new EmployeeList(),
-    employeeReviewViewModel: new EmployeeReview(), reviewListViewModel: new ReviewList()
-};
+var reviewViewModel;
 
-$(document).ready(function () {
+function Review(id, detail, employeeId) {
+        var self = this;
 
-    // bind view model to referring view
-    ko.applyBindings(employeeViewModel);
+        // observable are update elements upon changes, also update on element data changes [two way binding]
+        self.Id = ko.observable(id);
+        self.Detail = ko.observable(detail);
+        self.EmployeeId = ko.observable(employeeId);
 
-    // load data
-    employeeViewModel.employeeListViewModel.getEmployees();
-    employeeViewModel.reviewListViewModel.getReviews();
+        //get from server
+        self.assignees = [
+           "1",
+           "2"
+        ];
 
-});
+        self.addReview = function () {
+            var dataObject = ko.toJSON(this);
 
+            $.ajax({
+                url: '/api/Reviews',
+                type: 'post',
+                data: dataObject,
+                contentType: 'application/json',
+                success: function (data) {
+                    reviewViewModel.addReviewViewModel.push(new Review(data.Id, data.Detail, data.EmployeeId));
+
+                    self.Id(null);
+                    self.Detail('');
+                    self.EmployeeId('');
+                }
+            });
+        };
+    }
+
+function ReviewList() {
+
+        var self = this;
+
+        // observable arrays are update binding elements upon array changes
+        self.reviews = ko.observableArray([]);
+
+        self.getReviews = function () {
+            self.reviews.removeAll();
+
+            // retrieve reviews list from server side and push each object to model's reviews list
+            $.getJSON('/api/Reviews', function (data) {
+                $.each(data, function (key, value) {
+                    self.reviews.push(new Review(value.Id, value.Detail, value.EmployeeId));
+                });
+            });
+        };
+
+
+        // remove review. current data context object is passed to function automatically.
+        self.removeReview = function (review) {
+            $.ajax({
+                url: '/api/Reviews/' + review.Id(),
+                type: 'delete',
+                contentType: 'application/json',
+                success: function () {
+                    self.reviews.remove(review);
+                }
+            });
+        };
+}
+
+function EmployeeReview(id, detail, employeeId) {
+
+        var self = this;
+
+        self.reviews = ko.observableArray([]);
+        self.Id = ko.observable(id);
+        self.Detail = ko.observable(detail);
+        self.EmployeeId = ko.observable(employeeId);
+
+        self.getAReview = function (val) {
+            self.reviews.removeAll();
+
+            // retrieve review from server side and push each object to model's reviews list
+            $.getJSON('/api/Reviews/' + val, function (data) {
+                self.reviews.push(new Review(data.Id, data.Detail, data.EmployeeId));
+            });
+        };       
+    }
+
+    // create index view view model which contain two models for partial views
+    employeeViewModel = {
+        addEmployeeViewModel: new Employee(), employeeListViewModel: new EmployeeList(),
+        employeeReviewViewModel: new EmployeeReview(), reviewListViewModel: new ReviewList()
+    };
+
+    $(document).ready(function () {
+
+        // bind view model to referring view
+        ko.applyBindings(employeeViewModel);
+
+        // load data
+        employeeViewModel.employeeListViewModel.getEmployees();
+        employeeViewModel.reviewListViewModel.getReviews();
+
+    });

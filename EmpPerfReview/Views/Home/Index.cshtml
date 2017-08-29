@@ -44,16 +44,6 @@
         </div>
     </div>
 
-    @*<div class="col-md-8" id="empreview" hidden>
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h2 class="panel-title">Review</h2>
-            </div>
-            <div class="panel-body" data-bind="with: employeeReviewViewModel">
-                @Html.Partial("_EmployeeReview")
-            </div>
-        </div>
-    </div>*@
     <div class="col-md-8" id="empreview" hidden>
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -92,6 +82,7 @@
     </div>
     <div class="col-md-8">
         <div class="panel panel-primary">
+            <td><select class="form-control" data-bind="options: employeeList, value: EmployeeId"></select></td> 
             <div class="panel-heading">
                 <h2 class="panel-title">Reviews Employee assigned to</h2>
             </div>
